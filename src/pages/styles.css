@@ -1,0 +1,79 @@
+/* styles.css */
+.editor-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.drop-zone {
+    border: 2px dashed #cccccc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.dragging {
+    border-color: #2196f3;
+    background-color: #e3f2fd;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-list {
+    margin-bottom: 1.5rem;
+}
+
+.file-item {
+    padding: 0.8rem;
+    border: 1px solid #eee;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-item:hover {
+    background: #f0f0f0;
+}
+
+.file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.editor-area {
+    margin-top: 1rem;
+    width: 100%;
+    min-height: 300px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.copy-button-container {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.syntax-highlighter {
+    font-family: 'Fira Code', monospace !important;
+    border-radius: 4px;
+    margin: 0 !important;
+}
+
+.dialog-close-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
