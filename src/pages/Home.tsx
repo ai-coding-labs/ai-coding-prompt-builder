@@ -33,8 +33,8 @@ export default function Home() {
         <div className="home-container">
             {/* 标题区域 */}
             <header className="home-header">
-                <h1>任务</h1>
-                <p>支持文件拖拽上传与内容合并复制</p>
+                <h1>AI辅助写代码提示词构造器</h1>
+                <p>支持文件拖拽上传</p>
             </header>
 
             {/* 功能区域 */}
@@ -44,12 +44,19 @@ export default function Home() {
                     <TextField
                         fullWidth
                         multiline
-                        rows={4}
+                        minRows={4}
+                        maxRows={10}
                         value={roleContent}
                         onChange={(e) => setRoleContent(e.target.value)}
                         label="角色信息（Markdown格式）"
                         variant="outlined"
-                        sx={{marginBottom: 2}}
+                        sx={{
+                            marginBottom: 2,
+                            '& .MuiInputBase-root': {
+                                overflow: 'hidden',
+                                transition: 'height 0.2s ease-out'
+                            }
+                        }}
                     />
                 </div>
 
@@ -57,12 +64,19 @@ export default function Home() {
                     <TextField
                         fullWidth
                         multiline
-                        rows={4}
+                        minRows={4}
+                        maxRows={10}
                         value={ruleContent}
                         onChange={(e) => setRuleContent(e.target.value)}
                         label="规则内容（Markdown格式）"
                         variant="outlined"
-                        sx={{marginBottom: 2}}
+                        sx={{
+                            marginBottom: 2,
+                            '& .MuiInputBase-root': {
+                                overflow: 'hidden',
+                                transition: 'height 0.2s ease-out'
+                            }
+                        }}
                     />
                 </div>
 

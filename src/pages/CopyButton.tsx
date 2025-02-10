@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 
 interface CopyButtonProps {
     content: string;
-    files: Array<{ name: string; content: string }>;
+    files: Array<{ path: string; content: string }>;
 }
 
 const CopyButton: React.FC<CopyButtonProps> = ({ content, files }) => {
@@ -18,7 +18,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ content, files }) => {
 
     const handleCopy = async () => {
         const filesContent = files.map(file =>
-            `\`\`\`${file.name}\n${file.content}\n\`\`\``
+            `\`\`\`${file.path}\n${file.content}\n\`\`\``
         ).join('\n\n');
 
         const fullContent = `${content}\n\n# 相关参考文件：\n${filesContent}`;

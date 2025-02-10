@@ -1,5 +1,5 @@
 // MarkdownEditor.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import FileUpload from './FileUpload';
 import CopyButton from './CopyButton';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -11,6 +11,7 @@ import './styles.css';
 
 interface FileInfo {
     name: string;
+    path: string;
     size: number;
     extension: string;
     content: string;
@@ -29,6 +30,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
     const [files, setFiles] = useState<FileInfo[]>([]);
     const [previewFile, setPreviewFile] = useState<FileInfo | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const previewContentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -36,6 +38,16 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
         }, 500);
         return () => clearTimeout(timer);
     }, [markdownContent]);
+
+    useEffect(() => {
+        if (previewFile && previewContentRef.current) {
+            const savedScrollTop = parseInt(
+                localStorage.getItem(`scrollPosition:${previewFile.name}`) || '0',
+                10
+            );
+            previewContentRef.current.scrollTop = savedScrollTop;
+        }
+    }, [previewFile]);
 
     const handleFilesUploaded = (newFiles: FileInfo[]) => {
         setFiles(prev => [...prev, ...newFiles]);
@@ -72,7 +84,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
         </SyntaxHighlighter>
     );
 
-    const combinedContent = `# 角色\n${roleContent}\n\n# 任务\n${markdownContent}\n\n# 规则\n${ruleContent}`;
+    const combinedContent = `# 角色\n${roleContent}\n\n# 规则\n${ruleContent}\n\n# 任务\n${markdownContent}`;
 
     return (
         <div className="editor-container">
@@ -93,7 +105,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                                 }}
                             >
                                 <Typography variant="subtitle1">
-                                    {file.name}
+                                    {file.path}
                                 </Typography>
                                 <Typography variant="caption">
                                     {formatFileSize(file.size)} - {file.extension}
@@ -121,7 +133,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                 fullWidth
             >
                 <DialogTitle>
-                    {previewFile?.name}
+                    {previewFile?.path}
                     <IconButton
                         onClick={() => setIsDialogOpen(false)}
                         sx={{ position: 'absolute', right: 8, top: 8 }}
@@ -129,7 +141,17 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
-                <DialogContent dividers>
+                <DialogContent
+                    dividers
+                    ref={previewContentRef}
+                    onScroll={(e) => {
+                        if (previewFile) {
+                            const scrollTop = e.currentTarget.scrollTop;
+                            localStorage.setItem(`scrollPosition:${previewFile.name}`, scrollTop.toString());
+                        }
+                    }}
+                    sx={{ overflow: 'auto' }}
+                >
                     {previewFile && (
                         <CodePreview
                             content={previewFile.content}
@@ -143,12 +165,19 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                 <TextField
                     fullWidth
                     multiline
-                    rows={10}
+                    minRows={10}
+                    maxRows={20}
                     value={markdownContent}
                     onChange={(e) => setMarkdownContent(e.target.value)}
                     label="执行任务（Markdown格式）"
                     variant="outlined"
                     className="markdown-editor"
+                    sx={{
+                        '& .MuiInputBase-root': {
+                            overflow: 'hidden',
+                            transition: 'height 0.2s ease-out'
+                        }
+                    }}
                 />
             </div>
 

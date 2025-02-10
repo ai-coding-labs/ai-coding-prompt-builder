@@ -15,6 +15,7 @@ const FileUpload: React.FC<FileUploadProps> = ({onFilesUploaded}) => {
             reader.onload = (e) => {
                 resolve({
                     name: file.name,
+                    path: (file as any).path || file.name, // 获取完整路径
                     size: file.size,
                     extension: file.name.split('.').pop() || '',
                     content: e.target?.result as string
@@ -54,7 +55,7 @@ const FileUpload: React.FC<FileUploadProps> = ({onFilesUploaded}) => {
                 onChange={handleFileSelect}
                 className="file-input"
             />
-            <p>拖放文件到这里或点击选择文件</p>
+            <p>拖放AI参考代码文件到这里或点击此处选择文件（参考上下文越完整，AI推理结果越好）</p>
         </div>
     );
 };
