@@ -9,6 +9,16 @@ interface CopyButtonProps {
     files: FileInfo[];
 }
 
+const formatTokenCount = (count: number): string => {
+    if (count >= 10000) {
+        return `${(count / 10000).toFixed(1).replace(/\.0$/, '')}万`;
+    }
+    if (count >= 1000) {
+        return `${(count / 1000).toFixed(1).replace(/\.0$/, '')}k`;
+    }
+    return count.toString();
+};
+
 const CopyButton: React.FC<CopyButtonProps> = ({content, files}) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState<{ text: string; severity: 'success' | 'error' }>({
@@ -24,6 +34,8 @@ const CopyButton: React.FC<CopyButtonProps> = ({content, files}) => {
         // 使用近似算法：1个token约等于4个字符
         return Math.ceil(totalContent.length / 4);
     }, [content, files]);
+
+    const formattedToken = useMemo(() => formatTokenCount(tokenCount), [tokenCount]);
 
     const handleCopy = async () => {
         const filesContent = files.map(file =>
@@ -50,7 +62,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({content, files}) => {
                     padding: '12px 24px',
                     width: '100%'
                 }}>
-                构造提示词并复制到剪切板 (约 {tokenCount} Tokens)
+                构造提示词并复制到剪切板 (约 {formattedToken} Tokens)
             </Button>
             <Snackbar
                 open={open}
