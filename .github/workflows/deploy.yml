@@ -23,11 +23,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Configure Git
-        run: |
-          git remote set-url origin https://github.com/lim-sec/ai-coding-prompt-builder.git
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@github.com"
+#      - name: Configure Git
+#        run: |
+#          git remote set-url origin https://github.com/lim-sec/ai-coding-prompt-builder.git
+#          git config --global user.name "github-actions[bot]"
+#          git config --global user.email "github-actions@github.com"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
