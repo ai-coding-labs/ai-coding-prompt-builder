@@ -7,7 +7,7 @@ import { AppBar, Toolbar, Container } from '@mui/material';
 
 export default function App() {
     return (
-        <Router>
+        <Router basename="/ai-coding-prompt-builder">
             <AppBar position="static">
                 <Toolbar>
                     <Link to="/" style={{ textDecoration: 'none', color: 'white', marginRight: 20 }}>
@@ -26,7 +26,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     {/*<Route path="/profiles" element={<ProfileList />} />*/}
-                    <Route path="/profile/:id" element={<Home />} />
+                    {/*<Route path="/profile/:id" element={<Home />} />*/}
                     <Route path="/about" element={<About />} />
                 </Routes>
             </Container>
