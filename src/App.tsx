@@ -1,31 +1,35 @@
+// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
+import ProfileList from './pages/ProfileList';
+import { AppBar, Toolbar, Container } from '@mui/material';
 
 export default function App() {
     return (
         <Router>
-            <div className="app-container">
-                {/* 顶部导航栏 */}
-                <nav className="top-nav">
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                    </ul>
-                </nav>
+            <AppBar position="static">
+                <Toolbar>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'white', marginRight: 20 }}>
+                        首页
+                    </Link>
+                    {/*<Link to="/profiles" style={{ textDecoration: 'none', color: 'white', marginRight: 20 }}>*/}
+                    {/*    Profile列表*/}
+                    {/*</Link>*/}
+                    <Link to="/about" style={{ textDecoration: 'none', color: 'white' }}>
+                        关于
+                    </Link>
+                </Toolbar>
+            </AppBar>
 
-                {/* 路由内容 */}
-                <div className="content">
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                    </Routes>
-                </div>
-            </div>
+            <Container maxWidth="xl" sx={{ mt: 3 }}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profiles" element={<ProfileList />} />
+                    <Route path="/profile/:id" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                </Routes>
+            </Container>
         </Router>
     );
 }

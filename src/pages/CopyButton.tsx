@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 
 interface CopyButtonProps {
     content: string;
-    files: Array<{ path: string; content: string }>;
+    files: FileInfo[];
 }
 
 const CopyButton: React.FC<CopyButtonProps> = ({ content, files }) => {
@@ -21,43 +21,34 @@ const CopyButton: React.FC<CopyButtonProps> = ({ content, files }) => {
             `\`\`\`${file.path}\n${file.content}\n\`\`\``
         ).join('\n\n');
 
-        const fullContent = `${content}\n\n# 相关参考文件：\n${filesContent}`;
-
         try {
-            await navigator.clipboard.writeText(fullContent);
-            setMessage({
-                text: '内容已复制到剪贴板！',
-                severity: 'success',
-            });
-            setOpen(true);
-        } catch (err) {
-            setMessage({
-                text: '复制失败，请手动复制',
-                severity: 'error',
-            });
-            setOpen(true);
+            await navigator.clipboard.writeText(`${content}\n\n${filesContent}`);
+            setMessage({ text: '内容已复制!', severity: 'success' });
+        } catch {
+            setMessage({ text: '复制失败', severity: 'error' });
         }
-    };
-
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
+        setOpen(true);
     };
 
     return (
         <>
-            <Button variant="contained" onClick={handleCopy}>
+            <Button
+                variant="contained"
+                onClick={handleCopy}
+                sx={{
+                    mt: 3,
+                    fontSize: '1.1rem',
+                    padding: '12px 24px',
+                    width: '100%'
+                }}>
                 构造提示词并复制到剪切板
             </Button>
             <Snackbar
                 open={open}
                 autoHideDuration={3000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-                <Alert onClose={handleClose} severity={message.severity}>
+                onClose={() => setOpen(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert severity={message.severity}>
                     {message.text}
                 </Alert>
             </Snackbar>

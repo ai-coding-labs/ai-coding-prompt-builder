@@ -1,10 +1,15 @@
 // Home.tsx
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import MarkdownEditor from './MarkdownEditor';
 import './Home.css';
-import { TextField } from '@mui/material';
+import {Button, TextField} from '@mui/material';
+import {useNavigate, useParams} from 'react-router-dom';
 
 export default function Home() {
+
+    const {id} = useParams();
+    const navigate = useNavigate();
+
     const [ruleContent, setRuleContent] = useState(() => {
         const saved = localStorage.getItem('ruleContent');
         return saved || '';
@@ -87,6 +92,16 @@ export default function Home() {
             <footer className="home-footer">
                 <p>使用 React 构建 © 2024</p>
             </footer>
+
+            {id && (
+                <Button
+                    variant="contained"
+                    onClick={() => navigate(-1)}
+                    sx={{mt: 3, position: 'fixed', bottom: 20, right: 20}}
+                >
+                    返回列表
+                </Button>
+            )}
         </div>
     );
 }

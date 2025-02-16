@@ -7,6 +7,7 @@ import { materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 import './styles.css';
 
 interface FileInfo {
@@ -74,6 +75,12 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
         }
     };
 
+    const handleClearAllFiles = () => {
+        setFiles([]);
+        setPreviewFile(null);
+        setIsDialogOpen(false);
+    };
+
     const CodePreview = ({ content, language }: { content: string; language: string }) => (
         <SyntaxHighlighter
             language={language}
@@ -92,6 +99,16 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
 
             {files.length > 0 && (
                 <div className="file-list">
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                        <Typography variant="h6">已上传文件</Typography>
+                        <IconButton
+                            onClick={handleClearAllFiles}
+                            color="error"
+                            title="清空所有文件"
+                        >
+                            <DeleteForever />
+                        </IconButton>
+                    </Box>
                     {files.map((file, index) => (
                         <div
                             key={index}
