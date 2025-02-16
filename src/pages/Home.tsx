@@ -90,7 +90,7 @@ export default function Home() {
 
             {/* 底部信息 */}
             <footer className="home-footer">
-                <p>使用 React 构建 © 2024</p>
+                <p>使用 React 构建 © 2025</p>
             </footer>
 
             {id && (
