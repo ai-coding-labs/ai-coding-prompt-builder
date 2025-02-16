@@ -1,10 +1,10 @@
 // MarkdownEditor.tsx
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import FileUpload from './FileUpload';
 import CopyButton from './CopyButton';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, TextField, Typography } from '@mui/material';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {materialLight} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {Box, Dialog, DialogContent, DialogTitle, IconButton, TextField, Typography} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForever from '@mui/icons-material/DeleteForever';
@@ -23,7 +23,7 @@ interface MarkdownEditorProps {
     roleContent: string;
 }
 
-const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleContent }) => {
+const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent}) => {
     const [markdownContent, setMarkdownContent] = useState(() => {
         const saved = localStorage.getItem('markdownContent');
         return saved || '';
@@ -81,7 +81,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
         setIsDialogOpen(false);
     };
 
-    const CodePreview = ({ content, language }: { content: string; language: string }) => (
+    const CodePreview = ({content, language}: { content: string; language: string }) => (
         <SyntaxHighlighter
             language={language}
             style={materialLight}
@@ -95,7 +95,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
 
     return (
         <div className="editor-container">
-            <FileUpload onFilesUploaded={handleFilesUploaded} />
+            <FileUpload onFilesUploaded={handleFilesUploaded}/>
 
             {files.length > 0 && (
                 <div className="file-list">
@@ -106,7 +106,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                             color="error"
                             title="清空所有文件"
                         >
-                            <DeleteForever />
+                            <DeleteForever/>
                         </IconButton>
                     </Box>
                     {files.map((file, index) => (
@@ -134,9 +134,9 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                                     handleDeleteFile(index);
                                 }}
                                 size="small"
-                                sx={{ ml: 1 }}
+                                sx={{ml: 1}}
                             >
-                                <DeleteIcon fontSize="small" />
+                                <DeleteIcon fontSize="small"/>
                             </IconButton>
                         </div>
                     ))}
@@ -153,9 +153,9 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                     {previewFile?.path}
                     <IconButton
                         onClick={() => setIsDialogOpen(false)}
-                        sx={{ position: 'absolute', right: 8, top: 8 }}
+                        sx={{position: 'absolute', right: 8, top: 8}}
                     >
-                        <CloseIcon />
+                        <CloseIcon/>
                     </IconButton>
                 </DialogTitle>
                 <DialogContent
@@ -167,7 +167,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
                             localStorage.setItem(`scrollPosition:${previewFile.name}`, scrollTop.toString());
                         }
                     }}
-                    sx={{ overflow: 'auto' }}
+                    sx={{overflow: 'auto'}}
                 >
                     {previewFile && (
                         <CodePreview
@@ -199,7 +199,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ ruleContent, roleConten
             </div>
 
             <div className="copy-button-container">
-                <CopyButton content={combinedContent} files={files} />
+                <CopyButton content={combinedContent} files={files}/>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
-import ProfileList from './pages/ProfileList';
+// import ProfileList from './pages/ProfileList';
 import { AppBar, Toolbar, Container } from '@mui/material';
 
 export default function App() {
@@ -25,7 +25,7 @@ export default function App() {
             <Container maxWidth="xl" sx={{ mt: 3 }}>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/profiles" element={<ProfileList />} />
+                    {/*<Route path="/profiles" element={<ProfileList />} />*/}
                     <Route path="/profile/:id" element={<Home />} />
                     <Route path="/about" element={<About />} />
                 </Routes>
