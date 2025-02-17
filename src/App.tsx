@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, AppBar, Toolbar, Container, styled } from '@mui/material';
 import Home from './pages/Home';
 import PromptTemplate from './pages/PromptTemplate';
@@ -117,6 +117,8 @@ function MainApp() {
                     <Route path="/" element={<Home />} />
                     <Route path="/prompt" element={<PromptTemplate />} />
                     <Route path="/about" element={<About />} />
+                    {/* 添加404回退路由 */}
+                    <Route path="*" element={<Home />} />
                 </Routes>
 
                 <footer style={{
