@@ -52,10 +52,11 @@
 }
 
 .editor-area {
-    margin-top: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 100%;
-    min-height: 300px;
-    padding: 1rem;
+    /*min-height: 500px;*/
+    /*padding: 1rem;*/
     border: 1px solid #ddd;
     border-radius: 6px;
     font-family: 'Courier New', monospace;

@@ -34,11 +34,12 @@
     }
 }
 
-.role-input-section, .rule-input-section {
+.role-input-section, .rule-input-section, .output-input-section {
     background: #fff;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /*box-shadow: 0 2px 4px rgba(0,0,0,0.1);*/
+    margin-bottom: 1rem;
+    margin-top: 2rem;
 }
 
 .template-footer {
@@ -88,7 +89,7 @@
 }
 
 .rule-input-section {
-    margin-bottom: 1.5rem;
+    /*margin-bottom: 1.5rem;*/
 }
 
 .home-footer {
