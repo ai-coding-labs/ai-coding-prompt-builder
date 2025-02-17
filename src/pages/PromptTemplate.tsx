@@ -88,11 +88,6 @@ export default function PromptTemplate() {
                 <MarkdownEditor ruleContent={ruleContent} roleContent={roleContent}/>
             </main>
 
-            {/* 底部信息 */}
-            <footer className="template-footer">
-                <p>使用 React 构建 © 2025</p>
-            </footer>
-
             {id && (
                 <Button
                     variant="contained"
