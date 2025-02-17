@@ -1,5 +1,5 @@
 // src/App.tsx
-import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, AppBar, Toolbar, Container, styled } from '@mui/material';
 import Home from './pages/Home';
 import PromptTemplate from './pages/PromptTemplate';
