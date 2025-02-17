@@ -1,54 +1,38 @@
 /* Home.css */
 .home-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f5f5f5;
+    padding: 40px 0;
+    min-height: calc(100vh - 128px);
 }
 
-.home-header {
+.hero-section {
     text-align: center;
-    padding: 2rem 1rem;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 60px 0;
 }
 
-.home-header h1 {
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+.feature-list {
+    padding-left: 20px;
+    margin: 16px 0;
+    color: #616161;
 }
 
-.home-header p {
-    color: #7f8c8d;
+.feature-list li {
+    margin-bottom: 8px;
+    line-height: 1.6;
 }
 
-.editor-wrapper {
-    flex: 1;
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.rule-input-section {
-    margin-bottom: 1.5rem;
-}
-
-.home-footer {
+.cta-section {
     text-align: center;
-    padding: 1rem;
-    background: white;
-    border-top: 1px solid #eee;
-    color: #95a5a6;
+    padding: 60px 0;
+    background: #f8f9fa;
+    border-radius: 16px;
+    margin-top: 40px;
 }
 
-/* 响应式布局 */
 @media (max-width: 768px) {
-    .editor-wrapper {
-        padding: 1rem;
+    .hero-section {
+        padding: 40px 0;
     }
-
-    .home-header {
-        padding: 1.5rem 1rem;
+    .hero-section h1 {
+        font-size: 2.5rem;
     }
 }
