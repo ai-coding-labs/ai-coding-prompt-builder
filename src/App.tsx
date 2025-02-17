@@ -94,7 +94,7 @@ function NavLinks() {
 
 function MainApp() {
     return (
-        <Router basename="/ai-coding-prompt-builder">
+        <Router basename="/ai-coding-prompt-builder/">
             <AppBar
                 position="static"
                 color="default"
