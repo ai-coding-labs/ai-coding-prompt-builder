@@ -21,9 +21,10 @@ interface FileInfo {
 interface MarkdownEditorProps {
     ruleContent: string;
     roleContent: string;
+    outputContent: string;
 }
 
-const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent}) => {
+const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent, outputContent}) => {
     const [markdownContent, setMarkdownContent] = useState(() => {
         const saved = localStorage.getItem('markdownContent');
         return saved || '';
@@ -91,7 +92,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
         </SyntaxHighlighter>
     );
 
-    const combinedContent = `# 角色\n${roleContent}\n\n# 规则\n${ruleContent}\n\n# 任务\n${markdownContent}`;
+    const combinedContent = `# 角色\n${roleContent}\n\n# 规则\n${ruleContent}\n\n# 任务\n${markdownContent}\n\n# 输出格式\n${outputContent}`;
 
     return (
         <div className="editor-container">

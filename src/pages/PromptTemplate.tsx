@@ -6,7 +6,6 @@ import {Button, TextField} from '@mui/material';
 import {useNavigate, useParams} from 'react-router-dom';
 
 export default function PromptTemplate() {
-
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -17,6 +16,11 @@ export default function PromptTemplate() {
 
     const [roleContent, setRoleContent] = useState(() => {
         const saved = localStorage.getItem('roleContent');
+        return saved || '';
+    });
+
+    const [outputContent, setOutputContent] = useState(() => {
+        const saved = localStorage.getItem('outputContent');
         return saved || '';
     });
 
@@ -34,17 +38,21 @@ export default function PromptTemplate() {
         return () => clearTimeout(timer);
     }, [roleContent]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            localStorage.setItem('outputContent', outputContent);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [outputContent]);
+
     return (
         <div className="template-container">
-            {/* 标题区域 */}
             <header className="template-header">
                 <h1>AI辅助写代码提示词构造器</h1>
                 <p>支持文件拖拽上传</p>
             </header>
 
-            {/* 功能区域 */}
             <main className="editor-wrapper">
-
                 <div className="role-input-section">
                     <TextField
                         fullWidth
@@ -55,13 +63,7 @@ export default function PromptTemplate() {
                         onChange={(e) => setRoleContent(e.target.value)}
                         label="角色信息（Markdown格式）"
                         variant="outlined"
-                        sx={{
-                            marginBottom: 2,
-                            '& .MuiInputBase-root': {
-                                overflow: 'hidden',
-                                transition: 'height 0.2s ease-out'
-                            }
-                        }}
+                        sx={{marginBottom: 2}}
                     />
                 </div>
 
@@ -75,17 +77,29 @@ export default function PromptTemplate() {
                         onChange={(e) => setRuleContent(e.target.value)}
                         label="规则内容（Markdown格式）"
                         variant="outlined"
-                        sx={{
-                            marginBottom: 2,
-                            '& .MuiInputBase-root': {
-                                overflow: 'hidden',
-                                transition: 'height 0.2s ease-out'
-                            }
-                        }}
+                        sx={{marginBottom: 2}}
                     />
                 </div>
 
-                <MarkdownEditor ruleContent={ruleContent} roleContent={roleContent}/>
+                <div className="output-input-section">
+                    <TextField
+                        fullWidth
+                        multiline
+                        minRows={4}
+                        maxRows={10}
+                        value={outputContent}
+                        onChange={(e) => setOutputContent(e.target.value)}
+                        label="输出结果（Markdown格式）"
+                        variant="outlined"
+                        sx={{marginBottom: 2}}
+                    />
+                </div>
+
+                <MarkdownEditor
+                    ruleContent={ruleContent}
+                    roleContent={roleContent}
+                    outputContent={outputContent}
+                />
             </main>
 
             {id && (
