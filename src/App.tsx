@@ -72,11 +72,10 @@ const StyledLink = styled(Link)(({ theme }) => ({
 function NavLinks() {
     const location = useLocation();
 
-    // 修复路由匹配逻辑，使用hash路由的pathname
+    // 精确匹配当前路由路径
     const isActive = (path: string) => {
-        const hashPath = location.hash.replace('#', '');
-        if (path === '/') return hashPath === '/';
-        return hashPath.startsWith(path);
+        const currentPath = location.pathname;
+        return currentPath === path;
     };
 
     return (
@@ -96,7 +95,7 @@ function NavLinks() {
 
 function MainApp() {
     return (
-        <Router basename="/">
+        <Router>
             <AppBar
                 position="static"
                 color="default"
