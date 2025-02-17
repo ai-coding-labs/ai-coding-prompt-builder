@@ -29,11 +29,15 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
         const saved = localStorage.getItem('markdownContent');
         return saved || '';
     });
-    const [files, setFiles] = useState<FileInfo[]>([]);
+    const [files, setFiles] = useState<FileInfo[]>(() => {
+        const savedFiles = localStorage.getItem('uploadedFiles');
+        return savedFiles ? JSON.parse(savedFiles) : [];
+    });
     const [previewFile, setPreviewFile] = useState<FileInfo | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const previewContentRef = useRef<HTMLDivElement>(null);
 
+    // 持久化markdown内容
     useEffect(() => {
         const timer = setTimeout(() => {
             localStorage.setItem('markdownContent', markdownContent);
@@ -41,6 +45,15 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
         return () => clearTimeout(timer);
     }, [markdownContent]);
 
+    // 持久化上传文件
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            localStorage.setItem('uploadedFiles', JSON.stringify(files));
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [files]);
+
+    // 恢复滚动位置
     useEffect(() => {
         if (previewFile && previewContentRef.current) {
             const savedScrollTop = parseInt(
@@ -52,7 +65,17 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
     }, [previewFile]);
 
     const handleFilesUploaded = (newFiles: FileInfo[]) => {
-        setFiles(prev => [...prev, ...newFiles]);
+        setFiles(prev => {
+            const updatedFiles = [...prev, ...newFiles];
+            // 去重逻辑
+            const uniqueFiles = updatedFiles.reduce((acc, current) => {
+                if (!acc.some(file => file.path === current.path)) {
+                    acc.push(current);
+                }
+                return acc;
+            }, [] as FileInfo[]);
+            return uniqueFiles;
+        });
     };
 
     const formatFileSize = (bytes: number) => {
@@ -69,8 +92,10 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
     };
 
     const handleDeleteFile = (index: number) => {
-        const newFiles = files.filter((_, i) => i !== index);
-        setFiles(newFiles);
+        setFiles(prev => {
+            const newFiles = prev.filter((_, i) => i !== index);
+            return newFiles;
+        });
         if (previewFile?.name === files[index]?.name) {
             setIsDialogOpen(false);
         }
