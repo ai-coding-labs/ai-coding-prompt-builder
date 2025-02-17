@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: '/ai-coding-prompt-builder/',
-  plugins: [react()],
+    plugins: [react()],
+    base: '/ai-coding-prompt-builder/', // 保持base配置不变
+    build: {
+        outDir: 'dist',
+        assetsDir: 'assets'
+    }
 })

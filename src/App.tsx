@@ -72,9 +72,11 @@ const StyledLink = styled(Link)(({ theme }) => ({
 function NavLinks() {
     const location = useLocation();
 
+    // 修复路由匹配逻辑，使用hash路由的pathname
     const isActive = (path: string) => {
-        if (path === '/') return location.pathname === path;
-        return location.pathname.startsWith(path);
+        const hashPath = location.hash.replace('#', '');
+        if (path === '/') return hashPath === '/';
+        return hashPath.startsWith(path);
     };
 
     return (
@@ -94,7 +96,7 @@ function NavLinks() {
 
 function MainApp() {
     return (
-        <Router basename="/ai-coding-prompt-builder/">
+        <Router basename="/">
             <AppBar
                 position="static"
                 color="default"
@@ -117,8 +119,6 @@ function MainApp() {
                     <Route path="/" element={<Home />} />
                     <Route path="/prompt" element={<PromptTemplate />} />
                     <Route path="/about" element={<About />} />
-                    {/* 添加404回退路由 */}
-                    <Route path="*" element={<Home />} />
                 </Routes>
 
                 <footer style={{
