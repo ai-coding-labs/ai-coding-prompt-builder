@@ -124,7 +124,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
             {files.length > 0 && (
                 <div className="file-list">
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                        <Typography variant="h6">已上传文件</Typography>
+                        <Typography variant="h6">已选择文件</Typography>
                         <IconButton
                             onClick={handleClearAllFiles}
                             color="error"
