@@ -117,8 +117,6 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
         </SyntaxHighlighter>
     );
 
-    const combinedContent = `# 角色\n${roleContent}\n\n# 规则\n${ruleContent}\n\n# 任务\n${markdownContent}\n\n# 输出格式\n${outputContent}`;
-
     return (
         <div className="editor-container">
             <FileUpload onFilesUploaded={handleFilesUploaded}/>
@@ -225,7 +223,13 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ruleContent, roleContent
             </div>
 
             <div className="copy-button-container">
-                <CopyButton content={combinedContent} files={files}/>
+                <CopyButton
+                    roleContent={roleContent}
+                    ruleContent={ruleContent}
+                    taskContent={markdownContent}
+                    outputContent={outputContent}
+                    files={files}
+                />
             </div>
         </div>
     );

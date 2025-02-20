@@ -4,9 +4,13 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {FileInfo} from "../types/types.ts";
 import {keyframes} from '@mui/system';
+import {calculateTokenCount, formatTokenCount, generatePrompt} from "../utils/promptBuilder";
 
 interface CopyButtonProps {
-    content: string;
+    roleContent: string;
+    ruleContent: string;
+    taskContent: string;
+    outputContent: string;
     files: FileInfo[];
 }
 
@@ -25,41 +29,33 @@ const breathAnimation = keyframes`
     }
 `;
 
-const formatTokenCount = (count: number): string => {
-    if (count >= 10000) {
-        return `${(count / 10000).toFixed(1).replace(/\.0$/, '')}万`;
-    }
-    if (count >= 1000) {
-        return `${(count / 1000).toFixed(1).replace(/\.0$/, '')}k`;
-    }
-    return count.toString();
-};
-
-const CopyButton: React.FC<CopyButtonProps> = ({content, files}) => {
+const CopyButton: React.FC<CopyButtonProps> = ({
+                                                   roleContent,
+                                                   ruleContent,
+                                                   taskContent,
+                                                   outputContent,
+                                                   files
+                                               }) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState<{ text: string; severity: 'success' | 'error' }>({
         text: '',
         severity: 'success',
     });
 
-    const tokenCount = useMemo(() => {
-        const filesContent = files.map(file =>
-            `\`\`\`${file.path}\n${file.content}\n\`\`\``
-        ).join('\n\n');
-        const totalContent = `${content}\n\n${filesContent}`;
-        return Math.ceil(totalContent.length / 4);
-    }, [content, files]);
+    const tokenCount = useMemo(() =>
+            calculateTokenCount(roleContent, ruleContent, taskContent, outputContent, files),
+        [roleContent, ruleContent, taskContent, outputContent, files]
+    );
 
-    const formattedToken = useMemo(() => formatTokenCount(tokenCount), [tokenCount]);
+    const formattedToken = useMemo(() =>
+            formatTokenCount(tokenCount),
+        [tokenCount]);
 
     const handleCopy = async () => {
-        const filesContent = files.map(file =>
-            `\`\`\`${file.path}\n${file.content}\n\`\`\``
-        ).join('\n\n');
-
         try {
-            await navigator.clipboard.writeText(`${content}\n\n${filesContent}`);
-            setMessage({text: '内容已复制!', severity: 'success'});
+            await navigator.clipboard.writeText(
+                generatePrompt(roleContent, ruleContent, taskContent, outputContent, files)
+            );
         } catch {
             setMessage({text: '复制失败', severity: 'error'});
         }
