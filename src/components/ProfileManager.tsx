@@ -26,11 +26,9 @@ import {
     Tab
 } from '@mui/material';
 import {
-    Edit as EditIcon,
     Delete as DeleteIcon,
     ContentCopy as CopyIcon,
     MoreVert as MoreVertIcon,
-    Add as AddIcon,
     Download as DownloadIcon,
     Upload as UploadIcon,
     Close as CloseIcon
@@ -68,7 +66,7 @@ function TabPanel(props: TabPanelProps) {
 const ProfileManager: React.FC<ProfileManagerProps> = ({
     open,
     onClose,
-    onProfileChange
+    onProfileChange: _onProfileChange
 }) => {
     const [profiles, setProfiles] = useState<Profile[]>([]);
     const [tabValue, setTabValue] = useState(0);
@@ -89,7 +87,7 @@ const ProfileManager: React.FC<ProfileManagerProps> = ({
         setProfiles(allProfiles);
     };
 
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
         setTabValue(newValue);
     };
 

@@ -52,7 +52,7 @@ export async function convertPDFToMarkdown(
         
         // 获取PDF元数据
         const metadata = await pdf.getMetadata();
-        const info = metadata.info;
+        const info = metadata.info as any;
         
         const totalPages = pdf.numPages;
         const pagesToProcess = Math.min(totalPages, maxPages);

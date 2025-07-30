@@ -2,7 +2,7 @@
 import React, {useState, useRef} from 'react';
 import {FileInfo} from "../types/types.ts";
 import { convertPDFToMarkdown, convertPDFResultToFileInfo, isPDFFile } from '../utils/pdfProcessor';
-import { Alert, LinearProgress, Typography, Box } from '@mui/material';
+import { LinearProgress, Typography, Box } from '@mui/material';
 
 interface FileUploadProps {
     onFilesUploaded: (files: FileInfo[]) => void;

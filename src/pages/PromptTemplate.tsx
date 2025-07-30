@@ -1,5 +1,5 @@
 // PromptTemplate.tsx
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 import MarkdownEditor from './MarkdownEditor';
 import './PromptTemplate.css';
 import {Button, TextField, Box, Dialog, DialogTitle, DialogContent, DialogActions, Alert} from '@mui/material';
@@ -14,7 +14,6 @@ import ProfileManager from '../components/ProfileManager';
 export default function PromptTemplate() {
     const {id} = useParams();
     const navigate = useNavigate();
-    const markdownEditorRef = useRef<any>(null);
 
     const [ruleContent, setRuleContent] = useState(() => {
         const saved = localStorage.getItem('ruleContent');
@@ -210,7 +209,6 @@ export default function PromptTemplate() {
                 </div>
 
                 <MarkdownEditor
-                    ref={markdownEditorRef}
                     ruleContent={ruleContent}
                     roleContent={roleContent}
                     outputContent={outputContent}

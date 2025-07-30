@@ -15,7 +15,7 @@ import './styles.css';
 import { FileInfo } from '../types/types';
 import { HistoryRecord, FileFilter, DEFAULT_FILE_FILTER } from '../types/history';
 import { historyDB } from '../utils/indexedDB';
-import { applyFileFilter, getFilterStats } from '../utils/fileFilter';
+import { applyFileFilter } from '../utils/fileFilter';
 import HistoryPanel from '../components/HistoryPanel';
 import FileFilterComponent from '../components/FileFilter';
 

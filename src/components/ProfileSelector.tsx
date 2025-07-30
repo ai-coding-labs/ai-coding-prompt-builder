@@ -13,13 +13,11 @@ import {
     Divider,
     ListItemIcon,
     ListItemText,
-    Chip,
-    Tooltip
+    Chip
 } from '@mui/material';
 import {
     ExpandMore as ExpandMoreIcon,
-    Settings as SettingsIcon,
-    Add as AddIcon
+    Settings as SettingsIcon
 } from '@mui/icons-material';
 import { Profile } from '../types/profile';
 import { profileManager } from '../utils/profileManager';
