@@ -1,10 +1,12 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {FileInfo} from "../types/types.ts";
 import {keyframes} from '@mui/system';
 import {calculateTokenCount, formatTokenCount, generatePrompt} from "../utils/promptBuilder";
+import {HistoryRecord} from "../types/history";
+import {historyDB} from "../utils/indexedDB";
 
 interface CopyButtonProps {
     roleContent: string;
@@ -41,6 +43,20 @@ const CopyButton: React.FC<CopyButtonProps> = ({
         text: '',
         severity: 'success',
     });
+    const [isDBInitialized, setIsDBInitialized] = useState(false);
+
+    // 初始化IndexedDB
+    useEffect(() => {
+        const initDB = async () => {
+            try {
+                await historyDB.init();
+                setIsDBInitialized(true);
+            } catch (error) {
+                console.error('Failed to initialize IndexedDB:', error);
+            }
+        };
+        initDB();
+    }, []);
 
     const tokenCount = useMemo(() =>
             calculateTokenCount(roleContent, ruleContent, taskContent, outputContent, files),
@@ -51,11 +67,41 @@ const CopyButton: React.FC<CopyButtonProps> = ({
             formatTokenCount(tokenCount),
         [tokenCount]);
 
+    // 自动保存历史记录
+    const saveToHistory = async () => {
+        if (!isDBInitialized) return;
+
+        try {
+            const record: HistoryRecord = {
+                id: `copy_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                timestamp: Date.now(),
+                title: `复制记录 ${new Date().toLocaleString('zh-CN')}`,
+                description: '通过复制按钮自动保存的历史记录',
+                roleContent,
+                ruleContent,
+                taskContent,
+                outputContent,
+                files,
+                tags: ['自动保存', '复制'],
+                version: 1
+            };
+
+            await historyDB.saveRecord(record);
+            console.log('History record saved automatically on copy');
+        } catch (error) {
+            console.error('Failed to save history record on copy:', error);
+        }
+    };
+
     const handleCopy = async () => {
         try {
-            await navigator.clipboard.writeText(
-                generatePrompt(roleContent, ruleContent, taskContent, outputContent, files)
-            );
+            const promptText = generatePrompt(roleContent, ruleContent, taskContent, outputContent, files);
+            await navigator.clipboard.writeText(promptText);
+
+            // 复制成功后自动保存历史记录
+            await saveToHistory();
+
+            setMessage({text: '复制成功，已自动保存到历史记录', severity: 'success'});
         } catch {
             setMessage({text: '复制失败', severity: 'error'});
         }
