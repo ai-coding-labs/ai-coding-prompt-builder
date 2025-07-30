@@ -3,8 +3,12 @@ import { Container, Grid, Card, CardContent, Typography, Button, Box, useTheme }
 import { Link } from 'react-router-dom';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+import MessageIcon from '@mui/icons-material/Message';
+import QQIcon from '@mui/icons-material/QuestionAnswer';
 import { styled } from '@mui/system';
 import './Home.css';
+import wechatQR from '../assets/cc11001100-weixin.png';
+import qqQR from '../assets/qq-group-qrcode.jpg';
 
 // 修复后的FeatureCard样式组件
 const FeatureCard = styled(Card)(({ theme }) => ({
@@ -192,6 +196,113 @@ export default function Home() {
                     </FeatureCard>
                 </Grid>
             </Grid>
+
+            {/* 社区交流区域 */}
+            <Box sx={{
+                mb: 8,
+                p: 4,
+                backgroundColor: 'background.paper',
+                borderRadius: 4,
+                boxShadow: 1
+            }}>
+                <Typography variant="h4" gutterBottom sx={{
+                    fontWeight: 700,
+                    color: 'primary.main',
+                    textAlign: 'center',
+                    mb: 4
+                }}>
+                    🤖 加入AI社区
+                </Typography>
+                <Typography variant="body1" sx={{
+                    textAlign: 'center',
+                    color: 'text.secondary',
+                    mb: 4,
+                    fontSize: '1.1rem'
+                }}>
+                    与更多AI开发者交流经验，获取最新技术动态和使用技巧
+                </Typography>
+
+                <Grid container spacing={4} justifyContent="center">
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Box sx={{
+                            p: 3,
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            borderRadius: 2,
+                            textAlign: 'center',
+                            transition: 'all 0.3s',
+                            '&:hover': {
+                                transform: 'translateY(-4px)',
+                                boxShadow: 3
+                            }
+                        }}>
+                            <MessageIcon sx={{fontSize: 40, color: '#09b83e', mb: 2}}/>
+                            <Typography variant="h6" gutterBottom>
+                                微信交流群
+                            </Typography>
+                            <img
+                                src={wechatQR}
+                                alt="微信二维码"
+                                style={{
+                                    width: 150,
+                                    height: 210,
+                                    margin: '0 auto 16px',
+                                    display: 'block',
+                                    borderRadius: 8
+                                }}
+                            />
+                            <Typography variant="body2" color="text.secondary">
+                                扫码添加好友，备注"大模型"申请入群
+                            </Typography>
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Box sx={{
+                            p: 3,
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            borderRadius: 2,
+                            textAlign: 'center',
+                            transition: 'all 0.3s',
+                            '&:hover': {
+                                transform: 'translateY(-4px)',
+                                boxShadow: 3
+                            }
+                        }}>
+                            <QQIcon sx={{fontSize: 40, color: '#12b7f5', mb: 2}}/>
+                            <Typography variant="h6" gutterBottom>
+                                QQ交流群
+                            </Typography>
+                            <img
+                                src={qqQR}
+                                alt="QQ群二维码"
+                                style={{
+                                    width: 150,
+                                    height: 200,
+                                    margin: '0 auto 16px',
+                                    display: 'block',
+                                    borderRadius: 8
+                                }}
+                            />
+                            <Button
+                                variant="contained"
+                                href="https://qm.qq.com/q/pYBa99j1e2"
+                                target="_blank"
+                                sx={{
+                                    mt: 1,
+                                    borderRadius: 20,
+                                    px: 4,
+                                    bgcolor: '#12b7f5',
+                                    '&:hover': {bgcolor: '#0f9cd3'}
+                                }}
+                            >
+                                一键加群
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
 
             {/* CTA区域 */}
             <Box sx={{

@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme, AppBar, Toolbar, Container, styled } from '
 import Home from './pages/Home';
 import PromptTemplate from './pages/PromptTemplate';
 import About from './pages/About';
+import ProfilesPage from './pages/ProfilesPage';
 
 // 创建自定义主题
 const theme = createTheme({
@@ -86,6 +87,9 @@ function NavLinks() {
             <StyledLink to="/prompt" className={isActive('/prompt') ? 'active' : ''}>
                 提示词构建
             </StyledLink>
+            <StyledLink to="/profiles" className={isActive('/profiles') ? 'active' : ''}>
+                我的Profile
+            </StyledLink>
             <StyledLink to="/about" className={isActive('/about') ? 'active' : ''}>
                 关于我们
             </StyledLink>
@@ -117,6 +121,7 @@ function MainApp() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/prompt" element={<PromptTemplate />} />
+                    <Route path="/profiles" element={<ProfilesPage />} />
                     <Route path="/about" element={<About />} />
                 </Routes>
 
