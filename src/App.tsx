@@ -1,10 +1,11 @@
 // src/App.tsx
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { ThemeProvider, createTheme, AppBar, Toolbar, Container, styled } from '@mui/material';
+import { ThemeProvider, createTheme, AppBar, Toolbar, Container, Box, styled } from '@mui/material';
 import Home from './pages/Home';
 import PromptTemplate from './pages/PromptTemplate';
 import About from './pages/About';
 import ProfilesPage from './pages/ProfilesPage';
+import GitHubStarBadge from './components/GitHubStarBadge';
 
 // 创建自定义主题
 const theme = createTheme({
@@ -80,19 +81,28 @@ function NavLinks() {
     };
 
     return (
-        <Toolbar sx={{ gap: 1 }}>
-            <StyledLink to="/" className={isActive('/') ? 'active' : ''}>
-                首页
-            </StyledLink>
-            <StyledLink to="/prompt" className={isActive('/prompt') ? 'active' : ''}>
-                提示词构建
-            </StyledLink>
-            <StyledLink to="/profiles" className={isActive('/profiles') ? 'active' : ''}>
-                我的Profile
-            </StyledLink>
-            <StyledLink to="/about" className={isActive('/about') ? 'active' : ''}>
-                关于我们
-            </StyledLink>
+        <Toolbar sx={{ gap: 1, justifyContent: 'space-between' }}>
+            {/* 左侧导航链接 */}
+            <Box sx={{ display: 'flex', gap: 1 }}>
+                <StyledLink to="/" className={isActive('/') ? 'active' : ''}>
+                    首页
+                </StyledLink>
+                <StyledLink to="/prompt" className={isActive('/prompt') ? 'active' : ''}>
+                    提示词构建
+                </StyledLink>
+                <StyledLink to="/profiles" className={isActive('/profiles') ? 'active' : ''}>
+                    我的Profile
+                </StyledLink>
+                <StyledLink to="/about" className={isActive('/about') ? 'active' : ''}>
+                    关于我们
+                </StyledLink>
+            </Box>
+
+            {/* 右侧GitHub Star徽标 */}
+            <GitHubStarBadge
+                owner="ai-coding-labs"
+                repo="ai-coding-prompt-builder"
+            />
         </Toolbar>
     );
 }
